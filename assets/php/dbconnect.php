@@ -8,9 +8,9 @@
 	$dbname = "propertydb";
 	*/
 	$serverName = "localhost";
-	$username = "property@tj4.co";
-	$password = "9d3YK1OxdPMRgYI";
-	$dbname = "tj4_property";
+	$username = "";
+	$password = "";
+	 $dbname = "tj4_property";
 	
 	$conn = new mysqli($serverName, $username, $password, $dbname);
 	
