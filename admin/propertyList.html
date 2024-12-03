@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Property List</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+	
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	<link rel="stylesheet" href="../assets/css/propertyListstyle.css">
+	
+    <script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	<link rel="stylesheet" href="../assets/css/cloudflare4.7.0.css">
+	
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+	
+</head>
+
+<body id="page-top">
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html">Property</a></h1>
+
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link active" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+	
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+					<div class = "heading">
+						<div class = "col-sm-11 py-3"><h3 class="mt-2 text-gray-800"><img src="../assets/image/table.png" class="table-icon" alt="table-svg"/>Property List Table</h3></div>
+						<div class = "col-sm-1 py-2"><a href="addproperty.html" class="addnew"><button type = "button" class="btn btn-primary m-2">Add New Property</button></a></div>
+					</div>
+				</div>
+
+					<!-- Card -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h4 class="m-0 pb-4 font-weight-bold text-black">Property List</h4>
+								<div class = "d-flex">
+								<h5>Select Number Of Rows</h5>
+									<div class="form-group col-xs-3 col-sm-2 col-md-2 col-lg-1">
+										<!----------Show Numbers Of Rows---------->
+										<select class = "form-control" name="state" id="maxRows">
+											<option value="5000">Show All Rows</option>
+											<option value="10">10</option>
+											<option value="25">25</option>
+											<option value="50">50</option>
+											<option value="75">75</option>
+											<option value="100">100</option>
+										</select>
+									</div>
+								</div>
+						</div>
+						
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="propertyTable" cellspacing="0">
+                                    <thead>
+										<tr id = "mybtn">
+											<th>Property Name<button class='btn btn-outline-light text-info fa fa-arrows-v' onclick="sortAlp(0)"></button></th>
+											<th>Property Owner<button class='btn btn-outline-light text-info fa fa-arrows-v' onclick="sortAlp(1)"></button></th>
+											<th>Property Type<button class='btn btn-outline-light text-info fa fa-arrows-v' onclick="sortAlp(2)"button></th>
+											<th>Rental Price (RM)<button class='btn btn-outline-light text-info fa fa-arrows-v' onclick="sortNum(3)"></button></th>
+											<th>Rental Status<button class='btn btn-outline-light text-info fa fa-arrows-v' onclick="sortAlp(4)"></a></button></th>
+											<th style = "text-align: center; padding-bottom: 15px;">View</th>
+											<th style = "text-align: center; padding-bottom: 15px;">Delete</th>
+										</tr>
+									</thead>
+									
+									<tbody id="propertyList">
+									
+									</tbody>
+									<div id="myModal">
+									
+									</div>
+									
+                                </table>
+								
+								<!-------Start Pagination--------->
+								<div class='pagination-container' >
+									<nav>
+										<ul class="pagination">
+											<li data-page="prev" >
+												<span> < <span class="sr-only">(current)</span></span>
+											</li>
+												<!--	Here the JS Function Will Add the Rows -->
+											<li data-page="next" id="prev">
+												<span> > <span class="sr-only">(current)</span></span>
+											</li>
+										</ul>
+									</nav>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+	
+	<!-- ======= Footer ======= -->
+	<footer id="footer">
+		<div class="container footer-bottom clearfix "></div>
+	</footer>
+	<!-- End Footer -->
+	
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<!-- Vendor JS Files -->
+	<script src="../assets/vendor/aos/aos.js"></script>
+	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="../assets/js/main.js"></script>
+
+
+<script>
+$(document).ready(function(){
+	
+	if(localStorage.getItem("response") == "1") {
+		displayPropertyList();
+	}
+	else {
+		alert("Not authorized to access.");
+		window.location.href = '../index.html';
+	}
+});
+
+function displayPropertyList() {
+	// Check if the user has login
+	$.ajax({
+		url: '../assets/php/session.php',
+		dataType: 'json',
+		success: function(data){
+		
+			// If admin has login
+			if(data.response == "1"){
+			
+				$.ajax({
+					url: '../assets/php/propertyList.php',
+					dataType: 'json',
+					success: function(data) {
+						
+						var propertyHtml = ``;
+						var modalHtml = ``;
+						
+						for(let i=0; i<data.length; i++) 
+						{
+							var property_id = data[i].property_id;
+							var property_name = data[i].property_name;
+							var property_owner = data[i].property_owner;
+							var property_type = data[i].property_type;
+							var rental_price = data[i].rental_price;
+							var rental_status = data[i].rental_status;
+							
+							propertyHtml +=
+							`<tr>
+								<td>${property_name}</td>
+								<td>${property_owner}</td>
+								<td>${property_type}</td>
+								<td>${rental_price}</td>
+								<td>${rental_status}</td>
+								<td class='viewbtn' align ="center"><a href="updateProperty.html?edit=${property_id}" class='fa fa-eye'style="color: white;"></a></td>
+								<td class='deletebtn' align ="center"><button type="button" data-toggle="modal" data-target="#myModal${property_id}" class='ubtn btn bg-danger'><a href="#myModal" class='fa fa-trash' style="color: white;"></a></button></td>
+							</tr>`;
+							
+							modalHtml +=
+							`<!-- Modal (Delete) -->
+							<div class="modal fade" id="myModal${property_id}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title"><b>Delete Confirmation</b></h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+										<div class="modal-body">
+											<p>Are you sure you want to delete this property?</p>
+										</div>
+										<div class="modal-footer">
+											<a onclick="deleteProperty(${property_id})" class='fa fa-trash' style="color: white;"><button type="button" class="btn btn-danger">Delete</button></a>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+										</div>
+									</div>
+								</div>
+							</div><!-- End Modal -->`;
+						}
+						
+						$('#propertyList').html(propertyHtml);
+						$('#myModal').html(modalHtml);
+					}
+				});
+			}
+			else {
+				alert("Please login before proceed!");
+				window.location.href = '../index.html';
+			}
+		}
+	});
+}
+
+
+function deleteProperty(id) {
+	
+	var property_id = id;
+	
+	$.ajax({
+		type: 'POST',
+		url: '../assets/php/updateProperty.php',
+		data: {property_id: property_id},
+		dataType: 'json',
+		success: function(data) {
+			window.location.href = data;
+		}
+	});
+}
+
+
+<!-------------------------------------Sorting the table hearder--------------------------->
+<!------------Sort table data alphabetically------------>
+function sortAlp(n) {
+	var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("propertyTable");
+	switching = true;
+	
+	dir = "asc"; 
+	
+	while (switching) {
+		
+		switching = false;
+		rows = table.rows;
+		
+		for (i = 1; i < (rows.length - 1); i++) {
+			
+			shouldSwitch = false;
+			
+			x = rows[i].getElementsByTagName("TD")[n];
+			y = rows[i + 1].getElementsByTagName("TD")[n];
+			
+		if (dir == "asc") {
+			if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+			
+			shouldSwitch= true;
+			break;
+			}
+		} 
+		
+		else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          
+          shouldSwitch = true;
+          break;
+			}
+		}
+    }
+	
+    if (shouldSwitch) {
+      
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      
+      switchcount ++;      
+    }
+	
+	else {
+      
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+		}
+    }
+  }
+}
+
+<!------------Sort table data numerically------------>
+function sortNum(n) {
+	var table, rows, switching, i, x, y, shouldSwitching, dir, switchcounting = 0;
+	table = document.getElementById("propertyTable");
+	switching = true;
+	
+	dir = "asc"; 
+	
+	while (switching) {
+		
+		switching = false;
+		rows = table.rows;
+		
+		for (i = 1; i < (rows.length - 1); i++) {
+			
+			shouldSwitching = false;
+			
+			x = rows[i].getElementsByTagName("TD")[n];
+			y = rows[i + 1].getElementsByTagName("TD")[n];
+			
+		if (dir == "asc") {
+			if (Number(x.innerHTML) > Number(y.innerHTML)) {
+			
+			shouldSwitching= true;
+			break;
+			}
+		} 
+		
+		else if (dir == "desc") {
+        if (Number(x.innerHTML) < Number(y.innerHTML)) {
+         
+          shouldSwitching = true;
+          break;
+			}
+		}
+		}
+    
+	if (shouldSwitching) {
+		
+		rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		switching = true;
+		
+		switchcounting ++;      
+    }
+	
+	else {
+		
+		if (switchcounting == 0 && dir == "asc") {
+			dir = "desc";
+			switching = true;
+		}
+    }
+  }
+}
+
+
+<!------------Add active class to the current sorting button (highlight it)------------>
+var header = document.getElementById("mybtn");
+var btns = header.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+	btns[i].addEventListener("click", function() {
+	var current = document.getElementsByClassName("active");
+	current[0].className = current[0].className.replace(" active", "");
+	this.className += " active";
+	});
+}
+
+getPagination('#propertyTable');
+
+
+function getPagination(table) {
+	var lastPage = 1;
+
+	$('#maxRows')
+		.on('change', function(evt) {
+		//$('.paginationprev').html('');						// reset pagination
+
+     lastPage = 1;
+		$('.pagination')
+			.find('li')
+			.slice(1, -1)
+			.remove();
+		var trnum = 0; // reset tr counter
+		var maxRows = parseInt($(this).val()); // get Max Rows from select option
+
+		if (maxRows == 5000) {
+			$('.pagination').hide();
+		} else {
+			$('.pagination').show();
+		}
+
+		var totalRows = $(table + ' tbody tr').length; // numbers of rows
+		$(table + ' tr:gt(0)').each(function() {
+			
+			trnum++; // Start Counter
+			if (trnum > maxRows) {
+
+			$(this).hide(); // fade it out
+		}
+        if (trnum <= maxRows) {
+			$(this).show();
+		} 
+		}); 
+		if (totalRows > maxRows) {
+		
+		var pagenum = Math.ceil(totalRows / maxRows); 
+		//	numbers of pages
+		for (var i = 1; i <= pagenum; ) {
+			// for each page append pagination li
+			$('.pagination #prev')
+            .before(
+              '<li data-page="' +
+                i +
+                '">\
+								  <span>' +
+                i++ +
+                '<span class="sr-only">(current)</span></span>\
+								</li>'
+            )
+            .show();
+        } // end for i
+		} // end if row count > max rows
+		$('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
+		$('.pagination li').on('click', function(evt) {
+		// on click each page
+		evt.stopImmediatePropagation();
+        evt.preventDefault();
+        var pageNum = $(this).attr('data-page'); // get it's number
+
+        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
+
+        if (pageNum == 'prev') {
+          if (lastPage == 1) {
+            return;
+			}
+          pageNum = --lastPage;
+        }
+        if (pageNum == 'next') {
+          if (lastPage == $('.pagination li').length - 2) {
+            return;
+			}
+          pageNum = ++lastPage;
+        }
+
+        lastPage = pageNum;
+        var trIndex = 0; // reset tr counter
+        $('.pagination li').removeClass('active'); // remove active class from all li
+        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+        // $(this).addClass('active');					// add active class to the clicked
+	  	limitPagging();
+        $(table + ' tr:gt(0)').each(function() {
+			
+			trIndex++; // tr index counter
+			
+			if (
+				trIndex > maxRows * pageNum ||
+				trIndex <= maxRows * pageNum - maxRows
+			) {
+				$(this).hide();
+			} else {
+				$(this).show();
+			} //else fade in
+        }); // end of for each tr in table
+      }); // end of on click pagination list
+	  limitPagging();
+    })
+    .val(5000)
+    .change();
+
+  // end of on select change
+
+  // END OF PAGINATION
+}
+
+function limitPagging(){
+	// alert($('.pagination li').length)
+
+	if($('.pagination li').length > 7 ){
+			if( $('.pagination li.active').attr('data-page') <= 3 ){
+			$('.pagination li:gt(50)').hide();
+			$('.pagination li:lt(50)').show();
+			$('.pagination [data-page="next"]').show();
+		}if ($('.pagination li.active').attr('data-page') > 3){
+			$('.pagination li:gt(0)').hide();
+			$('.pagination [data-page="next"]').show();
+			for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
+				$('.pagination [data-page="'+i+'"]').show();
+
+			}
+
+		}
+	}
+}
+
+</script>
+
+
+</body>
+
+</html>

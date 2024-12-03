@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Update Payment</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+	
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	<link rel="stylesheet" href="../assets/css/updatePropertyStyle.css">
+	
+    <script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	
+	<!-- Selectize - Choose Property Name -->
+	<script src="../assets/js/cloudflare0.12.6.js"></script>
+	<link rel="stylesheet" href="../assets/css/cloudflare0.12.6.css">
+
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+	
+</head>
+
+<body>
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html">Property</a></h1>
+			
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link active" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+
+	
+	<!-- ======= Content ======= -->
+    <div class="main-panel">
+		
+		<!-- ======= Content Wrapper ======= --> 
+		
+		<div class="content-wrapper">
+		
+			<div class="return-btn">
+				<a href="paymentList.html" class="fa fa-undo" style="font-size:25px"></a>
+			</div>
+			
+			<div class="page-header">
+				<h3 class="page-title">
+					View & Update Payment
+				</h3>
+            </div>	
+			
+			<div class="row">
+				<div class="col-md-12 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body" id="updatePayment">
+						
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div><!-- End Content Wrapper -->
+		
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="container footer-bottom clearfix"></div>
+		</footer><!-- End Footer -->
+		
+	</div><!-- End Summary -->
+		
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+	<!-- Vendor JS Files -->
+	<script src="../assets/vendor/aos/aos.js"></script>
+	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="../assets/js/main.js"></script>
+	
+	<script>
+	$(document).ready(function () {
+	
+		if(localStorage.getItem("response") == "1") {
+			displayPayment();
+		}
+		else {
+			alert("Not authorized to access.");
+			window.location.href = '../index.html';
+		}
+
+	});
+	
+	
+	function displayPayment() {
+	
+		var url_params = new URLSearchParams(window.location.search);
+				
+		var editID = url_params.get('edit');
+		
+		$.ajax({
+			type: 'POST',
+			url: '../assets/php/updatePayment.php',
+			data: {edit: editID},
+			dataType: 'json',
+			success: function(data) {
+				
+				var payment = data.payment;
+				var property = data.property;
+				
+				var updatePaymentHtml = ``;
+				
+				var payment_id = payment.payment_id;
+				var property_name = payment.property_name;
+				var client_name = payment.client_name;
+				var electricity_bill = payment.electricity_bill;
+				var water_bill = payment.water_bill;
+				var rental_price = payment.rental_price;
+				var payment_status = payment.payment_status;
+				var total_amount = payment.total_amount;
+				
+				updatePaymentHtml += 
+				`<form name = "form" id = "form" class="new" method="POST" enctype="multipart/form-data">
+					<table class="details">
+						<tr>
+							<input name="Payment_ID" value="${payment_id}" hidden></td>
+						</tr>
+						<tr>
+							<td class="nameleft" colspan="3"><p align="left">Property Name</p>
+							<select name="Property_Name" id="select-state">`;
+							
+								for(let i=0; i<property.length; i++) {
+								
+									var property_list = property[i].property_name;
+									
+									updatePaymentHtml += 
+										`<option value="${property_list}"`;
+									
+										if(property_name == property_list) {
+											updatePaymentHtml += 
+												` selected`;
+										}
+										
+									updatePaymentHtml +=
+									`> ${property_list}</option>`;
+								}
+								
+						updatePaymentHtml +=		
+							`</select>
+						</tr>
+						
+						<tr>
+							<td class="addleft" colspan="3"><p align="left" >Client Name</p>
+							<input type="text" name="Client_Name" value="${client_name}"></td>
+						</tr>
+
+						<tr>
+							<td class="ownerleft"><p align="left">Electricity Bill (RM)</p>
+							<input type="text" name="Electricity_Bill" value="${electricity_bill}"> </td>
+							<td class="typeleft"><p align="left">Water Bill (RM)</p>
+							<input type="text" name="Water_Bill" value="${water_bill}"> </td>
+							<td class="typeleft"><p align="left">Rental Price (RM)</p>
+							<input type="text" name="Rental_Price" id="Rental_Price" value="${rental_price}" style="background-color: ghostwhite; color: gray;" readonly> </td>
+						</tr>
+
+						<tr>
+							<td class="statusleft" colspan="2"><p align ="left" >Payment Status</p>
+								<select name="Payment_Status">`;
+									
+									if(payment_status == "Unpaid") {
+										updatePaymentHtml +=
+										`<option value="Unpaid" selected>Unpaid</option>
+										<option value="Paid">Paid</option>`
+									}
+									else {
+										updatePaymentHtml +=
+										`<option value="Unpaid">Unpaid</option>
+										<option value="Paid" selected>Paid</option>`
+									}
+									
+								updatePaymentHtml +=
+								`</select>
+							</td>
+							<td class="ownerleft" colspan="1"><p align="left">Total Amount (RM)</p>
+							<input type="text" name="Total_Amount" id="Total_Amount" value="${total_amount}" style="background-color: ghostwhite; color: gray;" readonly> </td>
+						</tr>
+						<tr>
+							<td colspan="3" align="center"><button class="btn btn-info" type="submit" name="update">Save</button></td>
+						</tr>
+					</table>
+						<!-- Modal (Form Validation) -->
+							<div class="modal fade" id="myModal" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title title1"><b>Empty Data</b></h4>
+											<button type="button" class="close close1" data-dismiss="modal">&times;</button>
+										</div>
+										<div class="modal-body">
+											<p>Please fill in all the details.</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- End Modal -->
+						
+					<!-- Modal (Update Payment Success) -->
+					<div class="modal fade" id="successModal" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title title2"><b>Data Updated</b></h4>
+									<button type="button" class="close close2" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<p>Payment details is updated successfully.</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div><!-- End Modal -->
+					
+					<!-- Modal (Update Payment Fail) -->
+					<div class="modal fade" id="failModal" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title title2"><b>Update Failed</b></h4>
+									<button type="button" class="close close2" data-dismiss="modal">&times;</button>
+								</div>
+								<div class="modal-body">
+									<p>Failed to update payment details.</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div><!-- End Modal -->
+					
+				</form>`
+				
+				
+				$('#updatePayment').html(updatePaymentHtml);
+				
+				$.ajax({
+					url: '../assets/js/selectize.js',
+					dataType: 'script'
+				});
+				
+				$.ajax({
+					url: '../assets/js/updatePayment.js',
+					dataType: 'script'
+				});
+			}
+		});
+	}
+	</script>
+
+</body>
+</html>

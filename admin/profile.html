@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Profile</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+	
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	<link rel="stylesheet" href="../assets/css/profileStyle.css">
+	
+    <script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+	
+</head>
+
+<body>
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html">Property</a></h1>
+			
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link active" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+
+	
+	<!-- ======= Content ======= -->
+    <div class="main-panel">
+		
+		<!-- ======= Content Wrapper ======= --> 
+		<div class="content-wrapper">
+			<div class="page-header">
+				<h2 class="page-title">
+					<img src="../assets/image/profile.png" class="data-icon" alt="Data-Image" />
+					Profile
+				</h2>
+            </div>
+            <div class="row">
+				<div class="col-md-12 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body" id="profile-details">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+        </div><!-- End Content Wrapper -->
+		
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="container footer-bottom clearfix"></div>
+		</footer><!-- End Footer -->
+		
+	</div><!-- End Summary -->
+	
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+	<!-- Vendor JS Files -->
+	<script src="../assets/vendor/aos/aos.js"></script>
+	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="../assets/js/main.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+		
+		if(localStorage.getItem("response") == "1") {
+			displayProfile();
+		}
+		else {
+			alert("Not authorized to access.");
+			window.location.href = '../index.html';
+		}
+		
+	});
+	
+	function displayProfile() {
+		// Check if the user has login
+		$.ajax({
+			url: '../assets/php/session.php',
+			dataType: 'json',
+			success: function(data){
+			
+				// If admin has login
+				if(data.response == "1"){
+					// Admin ID
+					var id = data.id;
+					
+					// Retrieve profile details from database
+					$.ajax({
+						type: 'post',
+						url: '../assets/php/profile.php',
+						data: {id: id},
+						dataType: 'json',
+						success: function(data){
+						
+							var profileHtml = ``;
+						
+							var profile_picture = data.profile_picture;
+							var admin_username = data.admin_username;
+							var admin_fullname = data.admin_fullname;
+							var admin_birth = data.admin_birth;
+							var admin_gender = data.admin_gender;
+							var admin_phone = data.admin_phone;
+							var admin_email = data.admin_email;
+							var admin_password = data.admin_password;
+						
+								profileHtml = 
+								`<div class="col-md-4 stretch-card grid-margin" id="card">
+									<table class="profile">
+										<tr>
+											<td><img src="${profile_picture}" class="gender-icon" alt="Gender-Icon" /></td>
+										</tr>
+										<tr>
+											<td align="center" style="padding-left: 5px; padding-top: 40px; font-size: 20px;"><b> -- Welcome -- </b>
+											<p style="padding-top: 10px;">${admin_username}</p></td>
+										</tr>
+									</table>
+								</div>
+								<div class="col-md-8 strech-card grid-margin" id="card1">
+									<table class="profile-details">
+										<thead>
+											<th style="border-bottom: 1px solid darkgray;"><h2>PROFILE DETAILS <a href="editprofile.html"><button class="edit-btn" style="float:right;"><img src="../assets/image/edit.png" class="edit-icon" alt="Edit-Icon"/></button></a></h2></th>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="title">Full Name</td>
+											</tr>
+											<tr>
+												<td class="details">${admin_fullname}</td>
+											</tr>
+											<tr>
+												<td class="title">Date of Birth</td>
+											</tr>
+											<tr>
+												<td class="details">${admin_birth}</td>
+											</tr>
+											<tr>
+												<td class="title">Gender</td>
+											</tr>
+											<tr>
+												<td class="details">${admin_gender}</td>
+											</tr>
+											<tr>
+												<td class="title">Phone Number</td>
+											</tr>
+											<tr>
+												<td class="details">${admin_phone}</td>
+											</tr>
+											<tr>
+												<td class="title">Email Address</td>
+											</tr>
+											<tr>
+												<td class="details">${admin_email}</td>
+											</tr>
+											<tr>
+												<td class="title">Password</td>
+											</tr>
+											<tr>
+												<td class="input-group" id="show_hide_password">
+													<input type="password" value="${admin_password}" readonly>
+													<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>`
+							
+							$("#profile-details").html(profileHtml);
+							
+							$.ajax({
+								url: '../assets/js/showPassword.js',
+								dataType: 'script'
+							});
+						}
+					});
+				} 
+				else {
+					alert("Please login before proceed!");
+					window.location.href = '../index.html';
+				}
+			}
+		});
+	}
+	
+	
+	</script>
+	
+</body>
+</html>

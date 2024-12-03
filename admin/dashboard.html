@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Dashboard</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	
+	<link rel="stylesheet" href="../assets/css/dashboardStyle.css">
+	
+    <script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	
+	<link rel="stylesheet" href="../assets/css/cloudflare3.7.0.css">
+	<script  type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+	<script  type="text/javascript" src="../assets/js/cloudflare3.2.1.js"></script>
+
+	<script type="text/javascript" language="javascript" src="../assets/js/jquery1.7.2.js"></script>  
+	
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+ 
+</head>
+
+<body id="content">
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html">Property</a></h1>
+			
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link active" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+	
+	
+	<!-- Header Sliding Image and Animation Text -->
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        </ol> <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="banner"></div>
+                <div class="carousel-caption" data-aos="zoom-in">
+                    <h2>Property<span> Management</span></h2>
+                    <h3 class="animated fadeInUp" style="animation-delay: 1s">"Home Is The Nicest Word There Is"</h3>
+                    <p class="animated zoomIn" style="animation-delay: 2s"><a href="propertyList.html">View Property</a></p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="banner" style="background: url(https://wallpapers.com/images/hd/real-estate-architecture-draft-mdlfjyh7z7e0obz9.jpg)"></div>
+                <div class="carousel-caption" data-aos="zoom-in">
+                    <h2>Property <span>Management</span></h2>
+                    <h3 class="animated fadeInLeft" style="animation-delay: 1s">"Home Is Where The Heart Is"</h3>
+                    <p class="animated zoomIn" style="animation-delay: 2s"><a href="paymentList.html">View Payment</a></p>
+                </div>
+            </div>
+        </div> <!-- Controls --> <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+    </div><!-- End Sliding and Animation -->
+	
+	
+	<!-- ======= Content ======= -->
+    <div class="main-panel">
+
+		<!-- ======= Content Wrapper ======= -->
+        <div class="content-wrapper">
+            <div class="page-header">
+				<h3 class="page-title" id="flip">
+					<img src="../assets/image/summary.png" class="summary-icon" alt="Summary-Image" />
+					Summary
+				</h3>
+            </div>
+            <div class="row">
+				<div class="col-md-4 stretch-card grid-margin">
+					<div class="flip-card">
+						<div class="flip-card-inner">
+							<div class="flip-card-front" style="background: url(https://img.freepik.com/premium-photo/car-house-model-with-agent-customer-discussing-contract-buy-get-insurance-loan-real-estate-property-background_1418-2276.jpg);">
+								<h4>View Total Number of Property</h4>
+							</div>
+							
+							<div class="flip-card-back" style="background: url(../assets/image/propertyGlass.png);">
+								<h2>Total Number of Property</h2> 
+								<h1 id="total_property"></h1>						
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-4 stretch-card grid-margin">
+					<div class="flip-card">
+						<div class="flip-card-inner">
+							<div class="flip-card-front" style="background: url(https://ogden_images.s3.amazonaws.com/www.capecoralbreeze.com/images/2022/11/23111609/property-tax-WEB-1-750x500.jpg);">
+								<h4>View Total Number of Payment</h4>
+							</div>
+							<div class="flip-card-back" style="background: url(../assets/image/paymentGlass.png);">
+								<h2>Total Number of Payment</h2> 
+								<h1 id="total_payment"></h1> 
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 stretch-card grid-margin">
+					<div class="flip-card">
+						<div class="flip-card-inner">
+							<div class="flip-card-front" style="background: url(https://www.indiabullsrealestate.com/blog/wp-content/uploads/2019/06/Tax-Benefits-of-Investing-in-Real-Estate-You-Should-Know-About.jpg";>
+								<h4>View Total Sales</h4>
+							</div>
+							<div class="flip-card-back" style="background: url(../assets/image/salesGlass.png);">
+								<h2>Total Sales</h2> 
+								<h1 id="total_sales"></h1> 
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+		  
+		<!-- ======== Middle Hero ======== -->
+		<section id="mid-hero" class="mid-hero">
+			<div class="container" data-aos="zoom-in">
+				<div class="row">
+					<div class="col-lg-9 text-center text-lg-start">
+						<h3>Property Management</h3>
+					</div>
+					<div class="col-lg-3 mid-hero-btn-container text-center">
+						<a class="mid-hero-btn align-middle" href="profile.html">View Profile</a>
+					</div>
+				</div>
+			</div>
+		</section><!-- End Middle Hero -->
+		
+		<!-- ======= Content Wrapper 2 ======= --> 
+		<div class="content-wrapper2">
+			<div class="page-header">
+				<h3 class="page-title">
+					<img src="../assets/image/data.png" class="data-icon" alt="Data-Image" />
+					Latest Data
+				</h3>
+            </div>
+			
+            <div class="row">
+				<div class="col-md-6 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body">
+						
+							<div class="col-md-8">
+								<h4 class="card-title">Property</h4>
+								<p class="card-description"><code>Latest 10 Properties Data</code></p>
+							</div>
+							
+							<div class="col-md-4 py-5">
+								<a href="propertyList.html" class="list">Show All Property</a>
+							</div>
+							
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Property Name</th>
+										<th>Property Owner</th>
+										<th>Property Type</th>
+										<th>Rental Status</th>
+										<th>View</th>
+									</tr>
+								</thead>
+								
+								<tbody id="property">
+									<!-- From AJAX PHP database -->
+								</tbody>
+								
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body">
+						
+							<div class="col-md-8">
+								<h4 class="card-title">Payment</h4>
+								<p class="card-description"><code>Latest 10 Payment Data</code></p>
+							</div>
+							
+							<div class="col-md-4 py-5">
+								<a href="paymentList.html" class="list">Show All Payment</a>
+							</div>
+							
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Property Name</th>
+										<th>Client Name</th>
+										<th>Total Amount (RM)</th>
+										<th>Payment Status</th>
+										<th>View</th>
+									</tr>
+								</thead>
+								
+								<tbody id="payment">
+									<!-- From AJAX PHP database -->
+								</tbody>
+								
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div><!-- End Content Wrapper 2 -->
+		
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="container footer-bottom clearfix"></div>
+		</footer><!-- End Footer -->
+		
+	</div><!-- End Summary -->
+	
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+	<!-- Vendor JS Files -->
+	<script type="text/javascript" src="../assets/vendor/aos/aos.js"></script>
+	<script type="text/javascript" src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script type="text/javascript" src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script type="text/javascript" src="../assets/js/main.js"></script>
+	
+	
+	<script type="text/javascript" language="javascript">
+		$(document).on('ready', function(){
+		
+			if(localStorage.getItem("response") == "1")
+			{
+				// Check if the user has login
+				$.ajax({
+					url: '../assets/php/session.php',
+					dataType: 'json',
+					success: function(data){
+					
+						// If admin has login
+						if(data.response == "1"){
+						
+							var propertyHtml = ``;
+							var paymentHtml = ``;
+							
+							$.ajax({
+							
+								url: '../assets/php/dashboard.php',
+								dataType: 'json',
+								
+								success: function(data){
+									
+									var total_property = data.total_property;
+									var total_payment = data.total_payment;
+									var total_sales = data.total_sales;
+									var property = data.property;
+									var payment = data.payment;
+									
+									// Latest 10 property data
+									for(let i=0; i < property.length; i++)
+									{
+										var id = property[i].property_id;
+										var name = property[i].property_name;
+										var owner = property[i].property_owner;
+										var type = property[i].property_type;
+										var status = property[i].rental_status;
+										
+										propertyHtml += `<tr>
+											<td style='padding: 10px;'>${name}</td>
+											<td>${owner}</td>
+											<td>${type}</td>
+											<td>${status}</td>
+											<td class='viewbtn'><a href='updateProperty.html?edit=${id}' class='fa fa-eye'style='color: white;'></a></td>
+										</tr>`
+									}
+
+									// Latest 10 payment data
+									for(let j=0; j<payment.length; j++)
+									{
+										var id = payment[j].payment_id;
+										var name = payment[j].property_name;
+										var cname = payment[j].client_name;
+										var total = payment[j].total;
+										var status = payment[j].payment_status;
+										
+										paymentHtml += `<tr>
+											<td style="padding: 10px;">${name}</td>
+											<td>${cname}</td>
+											<td>${total}</td>
+											<td>${status}</td>
+											<td class="viewbtn"><a href="updatePayment.html?edit=${id}" class='fa fa-eye'style="color: white;"></a></td>
+										</tr>`
+									}
+									
+									$("#total_property").html(total_property);
+									$("#total_payment").html(total_payment);
+									$("#total_sales").html("RM " + total_sales);
+									$("#property").html(propertyHtml);
+									$("#payment").html(paymentHtml);
+								}
+							});
+						}
+					}
+				});
+			}
+			else {
+				alert("Not authorized to access.");
+				window.location.href = '../index.html';
+			}
+		});
+		
+	</script>
+
+</body>
+</html>

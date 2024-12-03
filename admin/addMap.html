@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Add New Map</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+	
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	<link rel="stylesheet" href="../assets/css/addpropertyStyle.css">
+	
+    <script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+</head>
+
+<body id="content">
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html" style = "text-decoration: none;">Property</a></h1>
+
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link active" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+
+	
+	<!-- ======= Content ======= -->
+    <div class="main-panel">
+		
+		<!-- ======= Content Wrapper ======= --> 
+		
+		<div class="content-wrapper">
+		
+			<div class="return-btn">
+				<a href="mapList.html" class="fa fa-undo" style="font-size:25px"></a>
+			</div>
+			
+			<div class="page-header">
+				<h3 class="page-title">
+					Add New Map
+				</h3>
+            </div>	
+			
+			<div class="row">
+				<div class="col-md-12 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body">
+							<form name = "form" id = "form" class="new" action="" method="POST">
+								<table class="details">
+									<tr>
+										<td class="addleft"><p align="left" >Map Name</p>
+										<input type="text" name="map_name"></td>
+									</tr>
+
+									<tr>
+										<td class="ownerleft"><p align="left">Map Image</p>
+											<input type="file" id="file" class="custom-file-input" value="" />
+											<input type="text" name="map_image" id="map_image" value="" hidden />
+										</td>
+									</tr>
+									
+									<tr>
+										<td align="center">
+											<p><b>Map Image Preview</b></p>
+											<img src="../assets/image/world-map.jpg" alt="Map-Preview" id="uploaded_image" style="width: 50%; height: 500px;"/>
+										</td>
+									</tr>
+
+									<tr>
+										<td align="center"><button class="btn btn-info" type="submit" name="submit">Save</button></td>
+									</tr>
+								</table>
+									<!-- Modal (Form Validation) -->
+										<div class="modal fade" id="myModal" role="dialog">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h4 class="modal-title title1"><b>Empty Data</b></h4>
+														<button type="button" class="close close1" data-dismiss="modal">&times;</button>
+													</div>
+													<div class="modal-body">
+														<p>Please fill in all the map details.</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									<!-- End Modal -->
+									
+									<!-- Modal (Add Map Success) -->
+									<div class="modal fade" id="successModal" role="dialog">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title title3"><b>Successfully Added</b></h4>
+													<a href="mapList.html"><button type="button" class="close close3">&times;</button></a>
+												</div>
+												<div class="modal-body">
+													<p>New map is added successfully.</p>
+												</div>
+												<div class="modal-footer">
+													<a href="mapList.html"><button type="button" class="btn btn-danger">Close</button></a>
+												</div>
+											</div>
+										</div>
+									</div><!-- End Modal -->
+								
+									<!-- Modal (Add Map Fail) -->
+									<div class="modal fade" id="failModal" role="dialog">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title title3"><b>Add Map Failed</b></h4>
+													<a href="mapList.html"><button type="button" class="close close3">&times;</button></a>
+												</div>
+												<div class="modal-body">
+													<p>Failed to added new map.</p>
+												</div>
+												<div class="modal-footer">
+													<a href="mapList.html"><button type="button" class="btn btn-danger">Close</button></a>
+												</div>
+											</div>
+										</div>
+									</div>
+								<!-- End Modal -->
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div><!-- End Content Wrapper -->
+		
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="container footer-bottom clearfix"></div>
+		</footer><!-- End Footer -->
+		
+	</div><!-- End Summary -->
+	
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+	<!-- Vendor JS Files -->
+	<script src="../assets/vendor/aos/aos.js"></script>
+	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="../assets/js/main.js"></script>
+	
+	<script>
+	$(document).ready(function () {
+		
+		if(localStorage.getItem("response") == "1") {
+			displayMapName();
+			
+			// Upload map image
+			$(document).on('change', '#file', function(){
+				var name = document.getElementById("file").files[0].name;
+				var form_data = new FormData();
+				var ext = name.split('.').pop().toLowerCase();
+				
+				if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) 
+				{
+					alert("Invalid Image File");
+				}
+				
+				var oFReader = new FileReader();
+				oFReader.readAsDataURL(document.getElementById("file").files[0]);
+				var f = document.getElementById("file").files[0];
+				var fsize = f.size||f.fileSize;
+				
+				
+					form_data.append("file", document.getElementById('file').files[0]);
+					
+					$.ajax({
+						url:"../assets/php/upload.php",
+						method:"POST",
+						data: form_data,
+						contentType: false,
+						cache: false,
+						processData: false,
+						
+						success:function(data)
+						{
+							$('#uploaded_image').attr('src', data);
+							$('#map_image').attr('value', data);
+						}
+					});
+				
+			});
+		}
+		else {
+			alert("Not authorized to access.");
+			window.location.href = '../index.html';
+		}
+	});
+	
+	function displayMapName() {
+		// Check if the user has login
+		$.ajax({
+			url: '../assets/php/session.php',
+			dataType: 'json',
+			success: function(data){
+			
+				// If admin has login
+				if(data.response == "1"){
+					$.ajax({
+						url: '../assets/js/addmap.js',
+						dataType: 'script'
+					});
+						
+				}
+				else {
+					alert("Please login before proceed!");
+					window.location.href = '../index.html';
+				}
+			}
+		});
+	}
+	
+	</script>
+
+</body>
+</html>
+</html>

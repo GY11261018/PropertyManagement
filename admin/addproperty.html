@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Add New Property</title>
+	
+	<!-- Favicons -->
+	<link href="../assets/image/favicon.png" rel="icon">
+	
+	<!-- Google Fonts -->
+	<link href="../assets/css/googlefont.css" rel="stylesheet">
+	
+	<!-- Vendor CSS Files -->
+	<link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+	<!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-font-icon.css">
+
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap3.css">
+	<link rel="stylesheet" href="../assets/css/fontawesome.css">
+	<link rel="stylesheet" href="../assets/css/addpropertyStyle.css">
+	
+	<script type="text/javascript" src="../assets/js/googleapis.js"></script>
+	<script src="../assets/js/jsviewer.js"></script>
+	
+	<script type="text/javascript" language="javascript" src="../assets/js/deleteLocalStorage.js"></script> 
+	
+	<!-- Selectize - Choose Property Name -->
+	<script src="../assets/js/cloudflare0.12.6.js"></script>
+	<link rel="stylesheet" href="../assets/css/cloudflare0.12.6.css">
+	
+	<!-- Map -->
+	<link rel="stylesheet" href="../assets//leaflet/leaflet.css" />
+	<script src="../assets/leaflet/leaflet.js"></script>
+	
+</head>
+
+<body>
+
+	<!-- ======= Header ======= -->
+	<header id="header" class="fixed-top ">
+		<div class="container d-flex align-items-center">
+
+			<h1 class="logo me-auto"><a href="dashboard.html">Property</a></h1>
+			
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li><a class="nav-link" href="dashboard.html"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li><a class="nav-link active" href="propertyList.html"><span class="glyphicon glyphicon-home"></span>Property</a></li>
+					<li><a class="nav-link" href="paymentList.html"><span class="glyphicon glyphicon-usd"></span>Payment</a></li>
+					<li><a class="nav-link" href="mapList.html"><span class="glyphicon glyphicon-map-marker"></span>Map</a></li>
+					<li><a class="nav-link" href="profile.html"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+					<li><a class="logout" href="../assets/php/logout.php?logout" onclick="deleteLocalStorage();"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav><!-- .navbar -->
+
+		</div>
+	</header><!-- End Header -->
+
+	
+	<!-- ======= Content ======= -->
+    <div class="main-panel">
+		
+		<!-- ======= Content Wrapper ======= --> 
+		
+		<div class="content-wrapper">
+		
+			<div class="return-btn">
+				<a href="propertyList.html" class="fa fa-undo" style="font-size:25px"></a>
+			</div>
+			
+			<div class="page-header">
+				<h3 class="page-title">
+					Add New Property
+				</h3>
+            </div>	
+			
+			<div class="row">
+				<div class="col-md-12 stretch-card grid-margin">
+					<div class="card">
+						<div class="card-body">
+							<form class="new" name="form" id="form" enctype="multipart/form-data">
+								<table class="details">
+
+									<tr>
+										<td class="nameleft" colspan="2"><p align="left">Property Name</p>
+										<input type="text" name="Property_Name"></td>
+									</tr>
+									
+									<tr>
+										<td class="addleft" colspan="2"><p align="left" >Property Address</p>
+										<textarea type="text" name="Property_Address"></textarea> </td>
+									</tr>
+
+									<tr>
+										<td class="desleft" colspan="2"><p align="left" >Property Description</p>
+										<textarea type="text" name="Property_Details"></textarea> </td>
+									</tr>
+
+									<tr>
+										<td class="ownerleft"><p align="left">Property Owner</p>
+										<input type="text" name="Property_Owner" step="0.01"> </td>
+										<td class="typeleft"><p align="left">Property Type</p>
+											<select name="Property_Type">
+												<option>Choose Your Property Type</option>
+												<option value="Single-family Residences">Single-family Residences</option>
+												<option value="Multi-family Rsidences">Multi-family Rsidences</option>
+												<option value="Townhouses">Townhouses</option>
+												<option value="Condominiums">Condominiums</option>
+												<option value="Apartments">Apartments</option>
+											</select>
+										</td>
+									</tr>
+
+									<tr>
+										<td class="rentalleft"><p align="left">Rental Price (RM)</p>
+										<input type="text" name="Rental_Price"> </td>
+										<td class="statusleft" ><p align ="left" >Rental Status</p>
+											<select name="Rental_Status">
+												<option value="No">No</option>
+												<option value="Yes">Yes</option>
+											</select>
+										</td>
+									</tr>
+									
+									<tr id="map-selection">
+									
+									</tr>
+									
+									<tr>
+										<td colspan="2" align="center"><div id="image-map" style="width: 40%; height: 400px; border: 1px solid #AAA; border-radius: 10px;"></div></td>
+										<td class="rentalleft" style="display:none;">
+											<p align="left">Latitude</p>
+											<input type="text" id="Latitude" name="Latitude" value = "0"  style="margin-bottom: 100px;">
+											<p align="left">Longitude</p>
+											<input type="text" id="Longitude" name="Longitude" value = "0">
+										</td>
+									</tr>
+							
+									<tr>
+										<td colspan="2" align="center"><button class="btn btn-info" type="submit" name="submit">Save</button></td>
+									</tr>
+								</table>
+								
+								<!-- Modal (Add Property Success) -->
+								<div class="modal fade" id="myModal" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title title1"><b>Empty Data</b></h4>
+												<button type="button" class="close close1" data-dismiss="modal">&times;</button>
+											</div>
+											<div class="modal-body">
+												<p>Please fill in all the property details.</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											</div>
+										</div>
+									</div>
+								</div><!-- End Modal -->
+								
+								<!-- Modal (Add Property Success) -->
+								<div class="modal fade" id="successModal" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title title2"><b>Successfully Added</b></h4>
+												<a href="propertyList.html"><button type="button" class="close close2">&times;</button></a>
+											</div>
+											<div class="modal-body">
+												<p>New property is added successfully.</p>
+											</div>
+											<div class="modal-footer">
+												<a href="propertyList.html"><button type="button" class="btn btn-danger">Close</button></a>
+											</div>
+										</div>
+									</div>
+								</div><!-- End Modal -->
+								
+								<!-- Modal (Add Property Fail) -->
+								<div class="modal fade" id="failModal" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title title2"><b>Add Property Failed</b></h4>
+												<a href="propertyList.html"><button type="button" class="close close2">&times;</button></a>
+											</div>
+											<div class="modal-body">
+												<p>Failed to added new property.</p>
+											</div>
+											<div class="modal-footer">
+												<a href="propertyList.html"><button type="button" class="btn btn-danger">Close</button></a>
+											</div>
+										</div>
+									</div>
+								</div><!-- End Modal -->
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div><!-- End Content Wrapper -->
+		
+		
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="container footer-bottom clearfix"></div>
+		</footer><!-- End Footer -->
+		
+	</div><!-- End Summary -->
+	
+	<!-- Back To Top -->
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+	<!-- Vendor JS Files -->
+	<script src="../assets/vendor/aos/aos.js"></script>
+	<script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="../assets/js/main.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+			if(localStorage.getItem("response") != "1"){
+				alert("Not authorized to access.");
+				window.location.href = '../index.html';
+			}
+			else
+			{
+				displayMapSelection();
+			}
+		});
+		
+		function displayMapSelection() {
+			
+			$.ajax({
+				url: '../assets/php/mapList.php',
+				dataType: 'json',
+				success: function(data) {
+					
+					var mapHtml = ``;
+					
+					mapHtml +=
+					`<td class="nameleft" colspan="2"><p align="left">Choose Map</p>
+						<select id="select-state" name="map_id" onchange="mapPreview()">`;
+					
+					for(let i=0; i<data.length; i++)
+					{
+						var mapID = data[i].map_id
+						var mapName = data[i].map_name;
+						
+						mapHtml +=
+						`<option value="${mapID}">${mapName}</option>`;
+					}
+					
+					mapHtml +=
+					`</select>`;
+					
+					
+					$('#map-selection').html(mapHtml);
+					
+					$.ajax({
+						url: '../assets/js/selectize.js',
+						dataType: 'script'
+					});
+					
+					$.ajax({
+						url: '../assets/js/addProperty.js',
+						dataType: 'script'
+					});
+				}
+			});
+		}
+		
+		// Change Map Image OnClick
+		function mapPreview()
+		{
+			var select = document.getElementById('select-state');
+			var index = select.selectedIndex;
+			var map_id = select.options[index].value;
+			
+			$.ajax({
+				type: 'POST',
+				url: '../assets/php/addProperty.php',
+				dataType: 'json',
+				data: {mapID: map_id},
+				success: function(data) {
+					var image= L.imageOverlay(data, [[0,0], [432,576]]);
+					image.addTo(map);
+				}
+			});
+		
+		}
+		
+	</script>
+
+</body>
+</html>
